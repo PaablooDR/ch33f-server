@@ -1,0 +1,58 @@
+[{
+  "_id": {
+    "$oid": "6163e13a8f7211a198e4c66e"
+  },
+  "user": {
+    "$oid": "6163e13a8f7211a198e4c66a"
+  },
+  "title": "Example Recipe",
+  "description": "Description of the example recipe",
+  "main_photo": "main_photo_url",
+  "ingredients": [
+    "ingredient1",
+    "ingredient2",
+    "ingredient3"
+  ],
+  "instructions": [
+    {
+      "title": "Step 1",
+      "image": "step1_image_url",
+      "description": "Description of step 1"
+    },
+    {
+      "title": "Step 2",
+      "image": "step2_image_url",
+      "description": "Description of step 2"
+    }
+  ],
+  "visits": 0
+},
+{
+  "_id": {
+    "$oid": "663b300acbd45a27d49f2ac2"
+  },
+  "user": {
+    "$oid": "6163e13a8f7211a198e4c66a"
+  },
+  "title": "Example Recipe 2",
+  "description": "Description of the example recipe 2",
+  "main_photo": "main_photo_url",
+  "ingredients": [
+    "ingredient1",
+    "ingredient2",
+    "ingredient3"
+  ],
+  "instructions": [
+    {
+      "title": "Step 1",
+      "image": "step1_image_url",
+      "description": "Description of step 1"
+    },
+    {
+      "title": "Step 2",
+      "image": "step2_image_url",
+      "description": "Description of step 2"
+    }
+  ],
+  "visits": 1
+}]
