@@ -20,3 +20,7 @@ GET http://localhost:3333/admins HTTP/1.1
 ###
 
 GET http://localhost:3333/recipes HTTP/1.1
+
+###
+
+GET http://localhost:3333/recipes/top5 HTTP/1.1
