@@ -2,14 +2,15 @@ GET http://localhost:3333/ HTTP/1.1
 
 ###
 
-POST http://localhost:3333/user HTTP/1.1
+POST http://localhost:3333/users HTTP/1.1
 Content-Type: application/json
+
 {
-    "name": "Alex",
-    "surname": "Alcala",
-    "password": "alex",
+    "name": "pepe-garcia123",
+    "email": "pepe.garcia@gmail.com",
+    "password": "pepe.garcia",
     "photo": "img",
-    "description": "",
+    "description": "Hola soy Pepe Garcia",
     "saved": {}
 }
 
@@ -24,3 +25,7 @@ GET http://localhost:3333/recipes HTTP/1.1
 ###
 
 GET http://localhost:3333/recipes/top5 HTTP/1.1
+
+###
+
+GET http://localhost:3333/users HTTP/1.1
