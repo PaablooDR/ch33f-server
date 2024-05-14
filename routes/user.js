@@ -9,4 +9,6 @@ router.get('/users', userController.getAllUsers);
 
 router.post('/users', upload.single('photo'), userController.createUser);
 
+router.post('/users/login', userController.loginUser);
+
 module.exports = router;
