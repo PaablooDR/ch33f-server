@@ -3,6 +3,7 @@ const router = express.Router();
 const recipeController = require('../controllers/recipeController');
 
 router.get('/recipes', recipeController.getAllRecipes);
+router.get('/recipes/recipe', recipeController.getRecipe);
 router.get('/recipes/find', recipeController.getSearchedRecipes);
 router.get('/recipes/top5', recipeController.getTopRecipes);
 router.get('/recipes/first', recipeController.getFirstRecipes);

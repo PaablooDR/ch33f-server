@@ -1,4 +1,6 @@
 const Recipe = require('../models/recipe');
+const { ObjectId } = require('mongodb');
+
 
 exports.getAllRecipes = async (req, res) => {
     try {
@@ -15,6 +17,20 @@ exports.getSearchedRecipes = async (req, res) => {
         res.json(FoundRecipes);
     } catch (err) {
         res.status(500).json({ message: err.message });
+    }
+};
+exports.getRecipe = async(req, res) => {
+    try {
+        const id = req.query.id;
+        const objectId = ObjectId.createFromHexString(id); // Crear un nuevo ObjectId directamente
+        const recipe = await Recipe.findOne({ _id: objectId });
+        if (!recipe) {
+            return res.status(404).json({ message: "Recipe not found" });
+        }
+        res.json(recipe);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
     }
 };
 exports.getTopRecipes = async (req, res) => {
