@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const { ObjectId } = require('mongodb');
 const path = require('path');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 exports.getAllUsers = async (req, res) => {
     try {
@@ -132,13 +133,24 @@ exports.loginUser = async(req, res) => {
             return res.status(400).json({ message: 'Usuario no encontrado' });
         }
 
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compareSync(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Contraseña incorrecta' });
         }
 
-        res.status(200).json({ message: 'Login exitoso' });
+        res.status(200).json({ 
+            message: 'Login exitoso', 
+            token: createToken(user)
+        });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
+}
+
+function createToken(user) {
+    const payload = {
+        user_id: user._id,
+    }
+
+    return jwt.sign(payload, '33 is coming home');
 }

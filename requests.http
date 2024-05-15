@@ -29,3 +29,4 @@ GET http://localhost:3333/recipes/top5 HTTP/1.1
 ###
 
 GET http://localhost:3333/users HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjY0MzQwOTdmYWUzYzNiMDMwZTAyOTkyIiwiaWF0IjoxNzE1NzYzMTIzfQ.1sShvgTAguc8uB_0R42zB3A5Z99-7YFvWfiAADBf80M
