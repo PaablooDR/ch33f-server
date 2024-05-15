@@ -10,6 +10,16 @@ exports.getAllRecipes = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+exports.getUserRecipes = async (req, res) => {
+    try {
+        const id = req.query.id;
+        const objectId = ObjectId.createFromHexString(id);
+        const recipes = await Recipe.find({ user: objectId });
+        res.json(recipes);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
 exports.getSearchedRecipes = async (req, res) => {
     try {
         const search = req.query.search || "";

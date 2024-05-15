@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const fs = require('node:fs');
+const { ObjectId } = require('mongodb');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 
@@ -7,6 +8,76 @@ exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find({});
         res.json(users);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+exports.getUser = async(req, res) => {
+    try {
+        const id = req.query.id;
+        const objectId = ObjectId.createFromHexString(id); // Crear un nuevo ObjectId directamente
+        const user = await User.findOne({ _id: objectId });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.json(user);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+exports.getFirstUsers = async (req, res) => {
+    try {
+        const firstUsers = await User.find({})
+            .limit(50);
+        res.json(firstUsers);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+exports.getNextUsers = async (req, res) => {
+    try {
+        const skip = parseInt(req.query.skip) || 0;
+        const nextUsers = await User.find({})
+            .skip(skip)
+            .limit(25);
+        res.json(nextUsers);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+exports.getSearchedUsers = async (req, res) => {
+    try {
+        const search = req.query.search || "";
+        const FoundUsers = await User.find({ name: { $regex: search, $options: "i" } });
+        res.json(FoundUsers);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+exports.getNextSearchedUsers = async (req, res) => {
+    try {
+        const skip = parseInt(req.query.skip) || 0;
+        const search = req.query.search;
+        const nextFoundUsers = await User.find({ name: { $regex: search, $options: "i" } })
+            .skip(skip)
+            .limit(25);
+        res.json(nextFoundUsers);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+exports.getFirstSearchedUsers = async (req, res) => {
+    try {
+        const search = req.query.search || "";
+        const firstFoundUsers = await User.find({ name: { $regex: search, $options: "i" } })
+            .limit(50);
+        res.json(firstFoundUsers);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
