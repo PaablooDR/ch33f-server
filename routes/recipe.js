@@ -11,5 +11,6 @@ router.get('/recipes/first', recipeController.getFirstRecipes);
 router.get('/recipes/nextRecipes', recipeController.getNextRecipes);
 router.get('/recipes/firstsearch', recipeController.getFirstSearchedRecipes);
 router.get('/recipes/nextRecipeSearch', recipeController.getNextSearchedRecipes);
+router.get('/recipes/visits', recipeController.sumVisitToRecipe);
 
 module.exports = router;

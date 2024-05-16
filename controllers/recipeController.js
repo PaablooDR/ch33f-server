@@ -95,3 +95,21 @@ exports.getNextSearchedRecipes = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+exports.sumVisitToRecipe = async(req, res) => {
+    try {
+        const id = req.query.id;
+        const objectId = ObjectId.createFromHexString(id); // Crear un nuevo ObjectId directamente
+        const recipe = await Recipe.findOneAndUpdate(
+            { _id: objectId },
+            { $inc: { visits: 1 } },
+            { new: true }
+        );
+        if (!recipe) {
+            return res.status(404).json({ message: "Recipe not found" });
+        }
+        res.json(recipe);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
