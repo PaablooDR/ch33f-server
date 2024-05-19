@@ -27,6 +27,19 @@ exports.getUser = async(req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+exports.getUserId = async(req, res) => {
+    try {
+        const email = req.query.email;
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.json(user);
+    } catch(err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
 
 exports.getFirstUsers = async (req, res) => {
     try {

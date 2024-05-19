@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 const cors = require('cors'); // Importa el módulo cors
 const adminRouter = require('./routes/admin');
 const recipeRouter = require('./routes/recipe');
@@ -32,6 +33,8 @@ app.use(userRouter);
 app.get('/', (req, res) => {
     res.send('¡Hola desde el servidor Express!');
 });
+
+app.use('/images', express.static(path.join(__dirname)));
 
 // Iniciar el servidor
 app.listen(PORT, () => {

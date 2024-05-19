@@ -1,6 +1,9 @@
 const Recipe = require('../models/recipe');
+const fs = require('node:fs');
 const { ObjectId } = require('mongodb');
-
+const path = require('path');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 exports.getAllRecipes = async (req, res) => {
     try {
@@ -112,4 +115,51 @@ exports.sumVisitToRecipe = async(req, res) => {
         console.error(err);
         res.status(500).json({ message: "Internal server error" });
     }
+};
+
+exports.createRecipe = async(req,res) => {
+    try {
+        const formData = req.body;
+
+        // console.log(formData);
+
+        newPath = saveImage(req.file);
+
+        const ingredients = [];
+        for (let i = 0; i < parseInt(formData.ingredientNumber); i++) {
+            ingredients.push(formData[`ingredient${i}`]);
+        }
+
+        const instructions = [];
+        for (let i = 0; i < parseInt(formData.stepNumber); i++) {
+            instructions.push({
+                title: formData[`steptitle${i}`],
+                description: formData[`stepdescription${i}`]
+            });
+        }
+
+        const objectIdUser = ObjectId.createFromHexString(formData.user);
+
+        const newRecipe = new Recipe({
+            title: formData.title,
+            user: objectIdUser,
+            description: formData.description,
+            main_photo: newPath,
+            ingredients: ingredients,
+            instructions: instructions
+        });
+        const savedRecipe = await newRecipe.save();
+        res.status(201).json(savedRecipe);
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+function saveImage(file) {
+    const ext = path.extname(file.originalname);
+    const newPath = path.join(file.destination, `${file.filename}${ext}`);
+    fs.renameSync(file.path, newPath);
+    return newPath;
 };

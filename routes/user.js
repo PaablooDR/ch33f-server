@@ -8,11 +8,12 @@ const upload = multer({ dest: 'uploads/' });
 router.get('/users', userController.getAllUsers);
 // router.get('/users', checkToken, userController.getAllUsers); SEGURIDAD
 router.get('/users/user', userController.getUser);
+router.get('/users/userId', userController.getUserId);
 router.get('/users/first', userController.getFirstUsers);
 router.get('/users/nextUsers', userController.getNextUsers);
 router.get('/users/firstsearch', userController.getFirstSearchedUsers); 
 router.get('/users/nextUserSearch', userController.getNextSearchedUsers);
-router.get('/users/find', userController.getSearchedUsers);7
+router.get('/users/find', userController.getSearchedUsers);
 
 router.post('/users', upload.single('photo'), userController.createUser);
 router.post('/users/login', userController.loginUser);
