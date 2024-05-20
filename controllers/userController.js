@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Recipe = require('../models/recipe');
 const fs = require('node:fs');
 const { ObjectId } = require('mongodb');
 const path = require('path');
@@ -167,3 +168,66 @@ function createToken(user) {
 
     return jwt.sign(payload, '33 is coming home');
 }
+
+exports.isSaved = async (req, res) => {
+    try {
+        let response;
+        const userId = req.query.user;
+        const recipeId = req.query.recipe;
+
+        const existingRecipe = await Recipe.findById(recipeId);
+        if (!existingRecipe) {
+            return res.status(404).json({ message: 'Receta no encontrada' });
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        const recipeIndex = user.saved.indexOf(recipeId);
+
+        if (recipeIndex === -1) {
+            response = false;
+        } else {
+            response = true;
+        }
+
+        res.status(200).json(response);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: err.message });
+    }
+};
+
+exports.changeSaved = async (req, res) => {
+    try {
+        const userId = req.query.user;
+        const recipeId = req.query.recipe;
+
+        const existingRecipe = await Recipe.findById(recipeId);
+        if (!existingRecipe) {
+            return res.status(404).json({ message: 'Receta no encontrada' });
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        const recipeIndex = user.saved.indexOf(recipeId);
+
+        if (recipeIndex === -1) {
+            user.saved.push(recipeId);
+        } else {
+            user.saved.splice(recipeIndex, 1);
+        }
+
+        await user.save();
+
+        res.status(200).json(user);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: err.message });
+    }
+};

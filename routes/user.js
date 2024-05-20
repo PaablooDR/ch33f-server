@@ -14,8 +14,11 @@ router.get('/users/nextUsers', userController.getNextUsers);
 router.get('/users/firstsearch', userController.getFirstSearchedUsers); 
 router.get('/users/nextUserSearch', userController.getNextSearchedUsers);
 router.get('/users/find', userController.getSearchedUsers);
+router.get('/users/isSaved', userController.isSaved);
 
 router.post('/users', upload.single('photo'), userController.createUser);
 router.post('/users/login', userController.loginUser);
+
+router.put('/users/changeSaved', userController.changeSaved);
 
 module.exports = router;
