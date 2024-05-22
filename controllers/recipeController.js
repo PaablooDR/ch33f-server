@@ -1,4 +1,5 @@
 const Recipe = require('../models/recipe');
+const User = require('../models/user');
 const fs = require('node:fs');
 const { ObjectId } = require('mongodb');
 const path = require('path');
@@ -116,6 +117,22 @@ exports.sumVisitToRecipe = async(req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+exports.getSavedRecipes = async(req,res) => {
+    try {
+        const id = req.query.id;
+        const objectId = ObjectId.createFromHexString(id);
+        const user = await User.findOne({ _id: objectId });
+        if (!user) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        // console.log(user.saved)
+        const recipes = await Recipe.find({ _id: { $in: user.saved } });
+        res.json(recipes);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
 
 exports.createRecipe = async(req,res) => {
     try {

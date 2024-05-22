@@ -16,5 +16,6 @@ router.get('/recipes/firstsearch', recipeController.getFirstSearchedRecipes);
 router.get('/recipes/nextRecipeSearch', recipeController.getNextSearchedRecipes);
 router.post('/recipes', upload.single('photo'), recipeController.createRecipe);
 router.get('/recipes/visits', recipeController.sumVisitToRecipe);
+router.get('/recipes/saved', recipeController.getSavedRecipes);
 
 module.exports = router;
