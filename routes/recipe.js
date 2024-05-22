@@ -6,16 +6,27 @@ const { checkToken } = require('../utils/middleware');
 const upload = multer({ dest: 'uploads/' });
 
 router.get('/recipes', recipeController.getAllRecipes);
-router.get('/recipes/user', recipeController.getUserRecipes)
+
+router.get('/recipes/user', recipeController.getUserRecipes);
+
 router.get('/recipes/recipe', recipeController.getRecipe);
+
 router.get('/recipes/find', recipeController.getSearchedRecipes);
+
 router.get('/recipes/top5', recipeController.getTopRecipes);
+
 router.get('/recipes/first', recipeController.getFirstRecipes);
+
 router.get('/recipes/nextRecipes', recipeController.getNextRecipes);
+
 router.get('/recipes/firstsearch', recipeController.getFirstSearchedRecipes);
+
 router.get('/recipes/nextRecipeSearch', recipeController.getNextSearchedRecipes);
-router.post('/recipes', upload.single('photo'), recipeController.createRecipe);
+
+router.post('/recipes', checkToken, upload.single('photo'), recipeController.createRecipe);
+
 router.get('/recipes/visits', recipeController.sumVisitToRecipe);
-router.get('/recipes/saved', recipeController.getSavedRecipes);
+
+router.get('/recipes/saved', checkToken, recipeController.getSavedRecipes);
 
 module.exports = router;

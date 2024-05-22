@@ -17,7 +17,7 @@ exports.getAllUsers = async (req, res) => {
 exports.getUser = async(req, res) => {
     try {
         const id = req.query.id;
-        const objectId = ObjectId.createFromHexString(id); // Crear un nuevo ObjectId directamente
+        const objectId = ObjectId.createFromHexString(id);
         const user = await User.findOne({ _id: objectId });
         if (!user) {
             return res.status(404).json({ message: "User not found" });

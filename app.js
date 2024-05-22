@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-const cors = require('cors'); // Importa el módulo cors
+const cors = require('cors');
 const adminRouter = require('./routes/admin');
 const recipeRouter = require('./routes/recipe');
 const userRouter = require('./routes/user');
