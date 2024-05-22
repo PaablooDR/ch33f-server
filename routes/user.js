@@ -19,6 +19,6 @@ router.get('/users/isSaved', userController.isSaved);
 router.post('/users', upload.single('photo'), userController.createUser);
 router.post('/users/login', userController.loginUser);
 
-router.put('/users/changeSaved', userController.changeSaved);
+router.put('/users/changeSaved', checkToken, userController.changeSaved);
 
 module.exports = router;
